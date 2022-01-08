@@ -15,7 +15,7 @@
 	<th>HyperLink</th>
 	</tr>";
 	$VTuber=$_POST["VTuber"];
-	$query=("select * from virtual_youtuber, media where virtual_youtuber.Name=media.Name and virtual_youtuber.Name=?");
+	$query=("select * from virtual_youtuber natural left outer join media where virtual_youtuber.Name=?");
 	$stmt=$db->prepare($query);
 	$stmt->execute(array($VTuber));
 	$result=$stmt->fetchAll();

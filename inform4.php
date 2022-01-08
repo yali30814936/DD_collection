@@ -14,7 +14,7 @@
 	<th>ID</th>
 	<th>HyperLink</th>
 	</tr>";
-	$query=("select * from virtual_youtuber,media where virtual_youtuber.Name=media.Name order by virtual_youtuber.Name");
+	$query=("select * from virtual_youtuber natural left outer join media order by virtual_youtuber.Name");
 	$query2=("select COUNT(*) from virtual_youtuber");
 	$stmt=$db->prepare($query);
 	$stmt->execute();
