@@ -29,7 +29,7 @@
 		echo "<td>".$result[$i]['State']."</td>";
 		echo "<td>".$result[$i]['Platform']."</td>";
 		echo "<td>".$result[$i]['ID']."</td>";
-		echo "<td>".$result[$i]['HyperLink']."</td>";
+		echo "<td>"."<a href='".$result[$i]['HyperLink']."' target='_blank'>".$result[$i]['HyperLink']."</a>"."</td>";
 		echo "</tr>";
 	}
 	echo "</table>";
