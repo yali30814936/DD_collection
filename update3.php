@@ -10,6 +10,11 @@
 	if ($HyperLink=="NULL") $HyperLink=NULL;
 	$query=("update media set ID=?, HyperLink=? where Name=?");
 	$stmt=$db->prepare($query);
-	$stmt->execute(array($ID,$HyperLink,$Name));
-	header("Location:inform3.php");
+	try {
+		$stmt->execute(array($ID,$HyperLink,$Name));
+		header("Location:inform3.php");
+	} catch (Exception $e) {
+		echo $e->getMessage();
+		echo "<br /><input type='button' onclick='window.location.replace(document.referrer)' value='返回首頁'></input>";
+	}
 ?>

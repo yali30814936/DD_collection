@@ -7,6 +7,11 @@
 	$State=$_POST["State"];
 	$query=("insert into company values(?,?,?)");
 	$stmt=$db->prepare($query);
-	$stmt->execute(array($Company_name,$Holding_company,$State));
-	header("Location:inform2.php");
+	try {
+		$stmt->execute(array($Company_name,$Holding_company,$State));
+		header("Location:inform2.php");
+	} catch (Exception $e) {
+		echo $e->getMessage();
+		echo "<br /><input type='button' onclick='window.location.replace(document.referrer)' value='返回首頁'></input>";
+	}
 ?>

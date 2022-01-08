@@ -13,6 +13,11 @@
 	$State=$_POST["State"];
 	$query=("update virtual_youtuber set Company_name=?, Group_name=?, Sub_Language=?, State=? where Name=?");
 	$stmt=$db->prepare($query);
-	$stmt->execute(array($Company_name,$Group_name,$Sub_Language,$State,$Name));
-	header("Location:inform1.php");
+	try {
+		$stmt->execute(array($Company_name,$Group_name,$Sub_Language,$State,$Name));
+		header("Location:inform1.php");
+	} catch (Exception $e) {
+		echo $e->getMessage();
+		echo "<br /><input type='button' onclick='window.location.replace(document.referrer)' value='返回首頁'></input>";
+	}
 ?>

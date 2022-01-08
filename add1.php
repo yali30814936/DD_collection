@@ -12,6 +12,11 @@
 	$State=$_POST["State"];
 	$query=("insert into virtual_youtuber values(?,?,?,?,?,?)");
 	$stmt=$db->prepare($query);
-	$stmt->execute(array($Name,$Company_name,$Group_name,$Main_Language,$Sub_Language,$State));
-	header("Location:inform1.php");
+	try {
+		$stmt->execute(array($Name,$Company_name,$Group_name,$Main_Language,$Sub_Language,$State));
+		header("Location:inform1.php");
+	} catch (Exception $e) {
+		echo $e->getMessage();
+		echo "<br /><input type='button' onclick='window.location.replace(document.referrer)' value='返回首頁'></input>";
+	}
 ?>

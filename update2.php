@@ -8,6 +8,11 @@
 	$State=$_POST["State"];
 	$query=("update company set Holding_company=?, State=? where Company_name=?");
 	$stmt=$db->prepare($query);
-	$stmt->execute(array($Holding_company,$State,$Company_name));
-	header("Location:inform2.php");
+	try {
+		$stmt->execute(array($Holding_company,$State,$Company_name));
+		header("Location:inform2.php");
+	} catch (Exception $e) {
+		echo $e->getMessage();
+		echo "<br /><input type='button' onclick='window.location.replace(document.referrer)' value='返回首頁'></input>";
+	}
 ?>
