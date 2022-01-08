@@ -60,9 +60,10 @@
 			}
 			if(x==4){
 				document.getElementById("B").innerHTML=
-				'<div class="btn-group"><button type="button" class="btn btn-success"onclick="search(1)">查詢現有VTuber資料</button>'
-				+'<div class="btn-group"><button type="button" class="btn btn-success"onclick="search(2)">查詢現有公司資料</button>'
-				+'<div class="btn-group"><button type="button" class="btn btn-success"onclick="search(3)">查詢現有媒體資料</button>';
+				'<div class="btn-group"><button type="button" class="btn btn-success"onclick="search(1)">查詢VTuber個人資料</button>'
+				+'<div class="btn-group"><button type="button" class="btn btn-success"onclick="search(2)">查詢公司資料</button>'
+				+'<div class="btn-group"><button type="button" class="btn btn-success"onclick="search(3)">查詢媒體資料</button>'
+				+'<div class="btn-group"><button type="button" class="btn btn-success"onclick="search(4)">查詢所有VTuber資料</button>';
 			}
 		}
 		function add(x) {
@@ -103,7 +104,7 @@
 			document.getElementById("demo").innerHTML = "<form action='add3.php' method='post'>"
 			+"Name:<select name='Name'>"
 			<?php  
-				$query=("select Name from virtual_youtuber");
+				$query=("select Name from virtual_youtuber where Name not in (select Name from media)");
 				$stmt=$db->prepare($query);
 				$stmt->execute();
 				$result=$stmt->fetchAll();
@@ -116,7 +117,7 @@
 				echo "'";
 			?>
 			+"</select><br>"
-			+"Platform:<input type='text' name='Platform' value='Youtube'></input><br>"
+			+"Platform:<input type='text' name='Platform' value='Youtube' required><font>必填</font></input><br>"
 			+"ID:<input type='text' name='ID' style='width:250px'required><font>必填</font></input><br>"
 			+"HyperLink:<input type='text' name='HyperLink' style='width:500px' required><font>必填</font></input><br>"
 			+"<input type='submit' value='送出'></form>";
@@ -157,6 +158,7 @@
 				?>
 				+"<option value='NULL'>NULL</option></select><br>"
 				+"Group_name:<input type='text' name='Group_name'></input><br>"
+				+"Main_Language:<input type='text' name='Main_Language' required><font>必填</font><br>"
 				+"Sub_Language:<input type='text' name='Sub_Language'></input><br>"
 				+"State:<select name='State'><option value='活動中'>活動中</option>"
 				+"<option value='暫停活動'>暫停活動</option></select><br>"
@@ -190,7 +192,7 @@
 				+"<font>預設為不修改 若要刪除此欄位請輸入NULL</font><br>"
 				+"Name:<select name='Name'>"
 				<?php  
-					$query=("select Name from media");
+					$query=("select Name from virtual_youtuber");
 					$stmt=$db->prepare($query);
 					$stmt->execute();
 					$result=$stmt->fetchAll();
@@ -203,6 +205,7 @@
 					echo "'";
 				?>
 				+"</select><br>"
+				+"Platform:<input type='text' name='Platform' value='Youtube' required><font>必填</font></input><br>"
 				+"ID:<input type='text' name='ID' style='width:250px'></input><br>"
 				+"HyperLink:<input type='text' name='HyperLink' style='width:500px'></input><br>"
 				+"<input type='submit' value='送出'></form>";
@@ -250,8 +253,22 @@
 		}
 		function search(x){
 			if(x==1){
-			  document.getElementById("demo").innerHTML = "<form action='inform1.php' method='post'>"
-			  +"<input type='submit' value='查詢'></form>";
+			  document.getElementById("demo").innerHTML = "<form action='inform5.php' method='post'>"
+				+'<input list="VTubers" name="VTuber" id="VTuber" required><datalist id="VTubers">'
+				<?php 
+					$query=("select Name from virtual_youtuber");
+					$stmt=$db->prepare($query);
+					$stmt->execute();
+					$result=$stmt->fetchAll();
+					echo "+'";
+					for($i=0;$i<count($result);$i++){
+						echo "<option value=\"".$result[$i]['Name']."\">";
+						echo $result[$i]['Name'];
+						echo "</option>";
+					}
+					echo "'";
+				?>
+			  +"</datalist><input type='submit' value='查詢'></form>";
 			}
 			if(x==2){
 			  document.getElementById("demo").innerHTML = "<form action='inform2.php' method='post'>"
@@ -259,6 +276,10 @@
 			}
 			if(x==3){
 			  document.getElementById("demo").innerHTML = "<form action='inform3.php' method='post'>"
+			  +"<input type='submit' value='查詢'></form>";
+			}
+			if(x==4){
+			  document.getElementById("demo").innerHTML = "<form action='inform4.php' method='post'>"
 			  +"<input type='submit' value='查詢'></form>";
 			}
 		}

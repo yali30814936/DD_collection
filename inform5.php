@@ -5,27 +5,33 @@
 	echo "<table class='table'>
 	<tr>
 	<th>Name</th>
+	<th>Company_name</th>
+	<th>Group_name</th>
+	<th>Main_Language</th>
+	<th>Sub_Language</th>
+	<th>State</th>
 	<th>Platform</th>
 	<th>ID</th>
 	<th>HyperLink</th>
 	</tr>";
-	$query=("select * from media order by Name");
-	$query2=("select COUNT(*) from media");
+	$VTuber=$_POST["VTuber"];
+	$query=("select * from virtual_youtuber, media where virtual_youtuber.Name=media.Name and virtual_youtuber.Name=?");
 	$stmt=$db->prepare($query);
-	$stmt->execute();
+	$stmt->execute(array($VTuber));
 	$result=$stmt->fetchAll();
-	$stmt2=$db->prepare($query2);
-	$stmt2->execute();
-	$result2=$stmt2->fetchAll();
 	for($i=0;$i<count($result);$i++){
 		echo "<tr>";
 		echo "<td>".$result[$i]['Name']."</td>";
+		echo "<td>".$result[$i]['Company_name']."</td>";
+		echo "<td>".$result[$i]['Group_name']."</td>";
+		echo "<td>".$result[$i]['Main_Language']."</td>";
+		echo "<td>".$result[$i]['Sub_Language']."</td>";
+		echo "<td>".$result[$i]['State']."</td>";
 		echo "<td>".$result[$i]['Platform']."</td>";
 		echo "<td>".$result[$i]['ID']."</td>";
 		echo "<td>"."<a href='".$result[$i]['HyperLink']."' target='_blank'>".$result[$i]['HyperLink']."</a>"."</td>";
 		echo "</tr>";
 	}
 	echo "</table>";
-	echo "資料數量:".$result2[0]['COUNT(*)']."筆";
 	echo "<br><input type='button' onclick='window.location.replace(document.referrer)' value='返回首頁'></input>";
 ?>
