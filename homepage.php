@@ -63,7 +63,7 @@
 				'<div class="btn-group"><button type="button" class="btn btn-success"onclick="search(1)">查詢VTuber個人資料</button>'
 				+'<div class="btn-group"><button type="button" class="btn btn-success"onclick="search(2)">查詢公司資料</button>'
 				+'<div class="btn-group"><button type="button" class="btn btn-success"onclick="search(3)">查詢媒體資料</button>'
-				+'<div class="btn-group"><button type="button" class="btn btn-success"onclick="search(4)">查詢VTuber所有資料</button>';
+				+'<div class="btn-group"><button type="button" class="btn btn-success"onclick="search(4)">查詢所有VTuber資料</button>';
 			}
 		}
 		function add(x) {
@@ -253,8 +253,22 @@
 		}
 		function search(x){
 			if(x==1){
-			  document.getElementById("demo").innerHTML = "<form action='inform1.php' method='post'>"
-			  +"<input type='submit' value='查詢'></form>";
+			  document.getElementById("demo").innerHTML = "<form action='inform5.php' method='post'>"
+				+'<input list="VTubers" name="VTuber" id="VTuber" required><datalist id="VTubers">'
+				<?php 
+					$query=("select Name from virtual_youtuber");
+					$stmt=$db->prepare($query);
+					$stmt->execute();
+					$result=$stmt->fetchAll();
+					echo "+'";
+					for($i=0;$i<count($result);$i++){
+						echo "<option value=\"".$result[$i]['Name']."\">";
+						echo $result[$i]['Name'];
+						echo "</option>";
+					}
+					echo "'";
+				?>
+			  +"</datalist><input type='submit' value='查詢'></form>";
 			}
 			if(x==2){
 			  document.getElementById("demo").innerHTML = "<form action='inform2.php' method='post'>"
