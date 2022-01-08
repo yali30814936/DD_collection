@@ -20,7 +20,7 @@ if(!isset($_SESSION['ID'])){
                 $row = mysqli_fetch_array($data);
                 $_SESSION['ID']=$row['ID'];
                 $_SESSION['username']=$row['username'];
-                $home_url = 'loged.php';
+                $home_url = 'homepage.php';
                 header('Location: '.$home_url);
             }else{//若查到的記錄不對，則設定錯誤資訊
                 $error_msg = 'Sorry, you must enter a valid username and password to log in.';
@@ -37,7 +37,7 @@ if(!isset($_SESSION['ID'])){
 <html>
 <head>
     <title>DD_collection - Log In</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="bootstrap.min.css">
 </head>
 <body>
     <h3>DD_collection - Log In</h3>

@@ -1,3 +1,6 @@
+<?php
+	session_start();
+?>
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="bootstrap.min.css">
@@ -26,8 +29,8 @@
 		<h2>DD收集庫</h2>
 	</div>
 	<div>
-		<p name="login_word" style="float:left">test</p>
-		<button name="login_btn" type="button" class="btn btn-info">TEST</input>
+		<p name="login_word" style="float:left">error</p>
+		<button name="login_btn" class="btn btn-info" onClick="self.location.href='logOut.php'">登出</button>
 	</div>
 	<div class="btn-group">
 	  <button type="button" class="btn btn-primary" onclick="myfunction(1)">新增</button>
@@ -38,6 +41,7 @@
 	  </div>
 	</div>
 	<div id="demo"></div>
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
 	<script>
 		function myfunction(x){
 			document.getElementById("demo").innerHTML="";
@@ -284,7 +288,10 @@
 			}
 		}
 		function start() {
-			
+			var name = "<?php
+						if(isset($_SESSION['username']))
+							echo $_SESSION['username'];?>";
+			$("p[name=login_word").text("歡迎　" + name + "　");
 		}
 		window.addEventListener("load", start, false);
 	</script>  

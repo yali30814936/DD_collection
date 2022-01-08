@@ -1,6 +1,6 @@
 <?php
 		$user='root';//user
-		$password='123';//password
+		$password='zmxncbv';//password
 		try{
 			$db = new PDO('mysql:host=localhost;dbname=dd_collection;charset=utf8',$user,$password);//DBNAME
 			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
